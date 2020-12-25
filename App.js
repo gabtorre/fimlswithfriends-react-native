@@ -1,11 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {firestore} from './firebase.js'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function App() {
+
+  const postRef = firestore.collection('posts');
+  const sortedPostsRef = postRef.orderBy('createdAt', 'desc');
+  const [ sortedposts ] = useCollectionData(sortedPostsRef, {idField: 'id'});
+
+  console.log(sortedposts)
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      {sortedposts && sortedposts.map(post => <Text key={post.id}>{post.title}</Text> )}
       <StatusBar style="auto" />
     </View>
   );
