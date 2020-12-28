@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import {firestore} from '../firebase.js'
+import { db } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function HomeScreen() {
 
-  const postRef = firestore.collection('posts');
+  const postRef = db.collection('posts');
   const sortedPostsRef = postRef.orderBy('createdAt', 'desc');
   const [ sortedposts ] = useCollectionData(sortedPostsRef, {idField: 'id'});
 
