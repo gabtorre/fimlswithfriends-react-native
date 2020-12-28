@@ -18,14 +18,14 @@ export default function HomeScreen() {
       <View style={styles.posts}>
         {sortedposts && sortedposts.map(post =>
         <View style={styles.postWrapper}>
-          <ImageBackground
+          <Text style={styles.postTitle} key={post.id}>{post.title} by {post.username}</Text>
+          <Image
           style={styles.postPoster}
           key={post.id+1}
           resizeMode={"cover"}
           source={{
             uri: `https://image.tmdb.org/t/p/w500/${post.poster}`
-          }}
-          ><Text style={styles.postTitle} key={post.id}>{post.title} by {post.username}</Text></ImageBackground>
+          }}/>
         </View>
         )}
       </View>
@@ -49,16 +49,15 @@ const styles = StyleSheet.create({
   },
   postWrapper: {
     paddingTop: 10,
-    height: 150,
-    width: 300,
-    overflow : "hidden"
+    overflow : "hidden",
   },
   postTitle: {
     color: 'white',
   },
   postPoster: {
-      width: "100%",
-      height: "100%",
+    height: 100,
+    width: 300,
       resizeMode: "cover",
+      borderRadius: 10,
   }
 });
