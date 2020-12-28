@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SearchScreen from '../screens/SearchScreen';
 import LibraryScreen from '../screens/LibraryScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -17,8 +18,10 @@ const AppStack = () => {
 
             if (route.name === 'Home') {
               iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+                ? 'home'
+                : 'home';
+            }  else if (route.name === 'Search') {
+              iconName = focused ? 'search' : 'search';
             } else if (route.name === 'Library') {
               iconName = focused ? 'list' : 'list';
             } else if (route.name === 'Settings') {
@@ -38,6 +41,11 @@ const AppStack = () => {
             name="Home"
             component={HomeScreen}
             options={{ title: 'Home' }}
+        />
+        <Tab.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{ title: 'Search' }}
         />
         <Tab.Screen
             name="Library"
