@@ -17,7 +17,7 @@ export default function HomeScreen() {
       </SafeAreaView>
 
       <ScrollView style={styles.posts}>
-
+      <View style={styles.container}>
         {sortedposts && sortedposts.map(post =>
         <View key={post.id} style={styles.postWrapper}>
           <View style={styles.row}>
@@ -50,7 +50,7 @@ export default function HomeScreen() {
           </View>
         </View>
         )}
-
+      </View>
       </ScrollView>
 
     </View>

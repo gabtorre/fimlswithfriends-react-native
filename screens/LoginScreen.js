@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, StyleSheet, ImageBackground } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -12,7 +12,8 @@ const LoginScreen = ({navigation}) => {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.text}>Login</Text>
+			<ImageBackground source={require("../assets/landing.jpg")} style={styles.bgImage}>
+			<Text style={styles.title}>Films with Friends</Text>
 			<FormInput
 				labelValue={email}
 				onChangeText={(userEmail) => setEmail(userEmail)}
@@ -28,10 +29,13 @@ const LoginScreen = ({navigation}) => {
 				secureTextEntry={true}
 			/>
 
-			<FormButton
-				buttonTitle="Sign In"
+			<TouchableHighlight
+				style={styles.loginBtn}
 				onPress={() => login(email, password)}
-			/>
+			>
+				<Text style={styles.loginBtnText}>Login</Text>
+			</TouchableHighlight>
+			</ImageBackground>
 		</View>
 	)
 }
@@ -40,21 +44,31 @@ export default LoginScreen;
 
 const styles = StyleSheet.create({
 	container: {
-	  justifyContent: 'center',
-	  alignItems: 'center',
-	  padding: 20,
-	  paddingTop: 50,
-	  backgroundColor: 'black'
-	},
+		backgroundColor: '#0E111D',
+		flex: 1
+	  },
 	logo: {
 	  height: 150,
 	  width: 150,
 	  resizeMode: 'cover',
 	},
-	text: {
+	title: {
 	  fontSize: 28,
-	  marginBottom: 10,
-	  color: '#051d5f',
+	  marginBottom: 50,
+	  color: '#F5F5F1',
+	  textAlign: "center",
+	},
+	loginBtn: {
+		backgroundColor: '#DC3545',
+		width: '50%',
+
+	},
+	loginBtnText: {
+	color: '#F5F5F1',
+	textAlign: "center",
+	padding: 3,
+	fontSize: 20,
+
 	},
 	navButton: {
 	  marginTop: 15,
@@ -67,4 +81,11 @@ const styles = StyleSheet.create({
 	  fontWeight: '500',
 	  color: '#2e64e5',
 	},
+	bgImage: {
+		flex: 1,
+		resizeMode: "cover",
+		alignItems: 'center',
+		padding: 20,
+		paddingTop: 50,
+	}
   });

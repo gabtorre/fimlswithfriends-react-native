@@ -1,5 +1,5 @@
 import React, { useState, useContext} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableHighlight, StyleSheet, ImageBackground, Alert } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import { AuthContext } from '../navigation/AuthProvider';
@@ -7,12 +7,13 @@ import { AuthContext } from '../navigation/AuthProvider';
 const SignupScreen = ({navigation}) => {
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState();
-
+	const [password2, setPassword2] = useState();
 	const {register} = useContext(AuthContext);
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.text}>Create an Account</Text>
+			<ImageBackground source={require("../assets/landing.jpg")} style={styles.bgImage}>
+			<Text style={styles.title}>Create an Account</Text>
 			<FormInput
 				labelValue={email}
 				onChangeText={(userEmail) => setEmail(userEmail)}
@@ -27,11 +28,22 @@ const SignupScreen = ({navigation}) => {
 				placeholderText="Password"
 				secureTextEntry={true}
 			/>
-
-			<FormButton
-				buttonTitle="Register"
-				onPress={() => register(email, password)}
+			<FormInput
+				labelValue={password2}
+				onChangeText={(userPassword2) => setPassword2(userPassword2)}
+				placeholderText="Confirm Password"
+				secureTextEntry={true}
 			/>
+			<TouchableHighlight
+				style={styles.loginBtn}
+				onPress={password == password2
+					? () => register(email, password)
+					: () => Alert.alert("passwords do not match")
+				}
+			>
+				<Text style={styles.loginBtnText}>Register</Text>
+			</TouchableHighlight>
+			</ImageBackground>
 		</View>
 	)
 }
@@ -40,16 +52,15 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
 	container: {
-	  justifyContent: 'center',
-	  alignItems: 'center',
-	  padding: 20,
-	  paddingTop: 50
+	  backgroundColor: '#0E111D',
+	  flex: 1
 	},
-	text: {
-	  fontSize: 28,
-	  marginBottom: 10,
-	  color: '#051d5f',
-	},
+	title: {
+		fontSize: 28,
+		marginBottom: 50,
+		color: '#F5F5F1',
+		textAlign: "center",
+	  },
 	navButton: {
 	  marginTop: 15,
 	},
@@ -58,4 +69,21 @@ const styles = StyleSheet.create({
 	  fontWeight: '500',
 	  color: '#2e64e5',
 	},
+	loginBtn: {
+		backgroundColor: '#DC3545',
+		width: '50%',
+	},
+	loginBtnText: {
+		color: '#F5F5F1',
+		textAlign: "center",
+		padding: 3,
+		fontSize: 20,
+	},
+	bgImage: {
+		flex: 1,
+		resizeMode: "cover",
+		alignItems: 'center',
+		padding: 20,
+		paddingTop: 50,
+	}
   });

@@ -8,7 +8,7 @@ class SearchScreen extends React.Component {
         query: "",
         suggestions: null,
         searched: false,
-        TMDBAPI: TMDBAPI
+        TMDBAPI: TMDBAPI,
     };
 
     search = () =>{
@@ -24,24 +24,13 @@ class SearchScreen extends React.Component {
         }
     }
 
-    handleInput = (e) => {
-        this.setState(
-          {
-            query: e.target.value,
-            searched: true,
-          }
-          , () => this.search()
-        );
-      };
-
-
     render() {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.header}>
         <TextInput editable
             style={{ height: 40, width: '80%', borderColor: 'gray', borderWidth: 1, color: 'white' }}
-            onChange={this.handleInput}
+            onChangeText={text => this.setState({query: text}, () => this.search())}
             placeholder="Search Movie"
         />
       </SafeAreaView>
@@ -49,13 +38,16 @@ class SearchScreen extends React.Component {
       <View style={styles.row}>
         {this.state.suggestions && this.state.suggestions.map(post =>
         <View key={post.id} style={styles.column}>
-          <Image
+          { post.poster_path ? <Image
           style={styles.postPoster}
           resizeMode={"cover"}
           source={{ uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` }}
-          />
-          <Text style={styles.postTitle}>{post.title}</Text>
-          <Text style={styles.postTitle}>{post.release_date}</Text>
+          /> : <Image
+          style={styles.postPoster}
+          resizeMode={"cover"}
+          source={{ uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}
+          />}
+          { post.release_date ? <Text style={styles.postTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.postTitle}>{post.title}</Text> }
         </View>
         )}
       </View>
@@ -74,12 +66,16 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexWrap: 'wrap',
   },
   column: {
     flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '50%',
+    margin: 5,
+    maxWidth: 200,
   },
   posts: {
     paddingTop: 10,
@@ -95,10 +91,11 @@ const styles = StyleSheet.create({
   },
   postTitle: {
     color: 'white',
+    fontSize: 15,
   },
   postPoster: {
-    height: 400,
-    width: 300,
+    height: 300,
+    width: 200,
     resizeMode: "cover",
     borderRadius: 10,
   }
