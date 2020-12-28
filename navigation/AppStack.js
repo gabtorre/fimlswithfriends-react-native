@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LibraryScreen from '../screens/LibraryScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -18,8 +19,10 @@ const AppStack = () => {
               iconName = focused
                 ? 'ios-information-circle'
                 : 'ios-information-circle-outline';
+            } else if (route.name === 'Library') {
+              iconName = focused ? 'list' : 'list';
             } else if (route.name === 'Settings') {
-              iconName = focused ? 'ios-list-box' : 'ios-list';
+              iconName = focused ? 'settings' : 'settings-outline';
             }
 
             // You can return any component that you like here!
@@ -35,6 +38,11 @@ const AppStack = () => {
             name="Home"
             component={HomeScreen}
             options={{ title: 'Home' }}
+        />
+        <Tab.Screen
+            name="Library"
+            component={LibraryScreen}
+            options={{ title: 'Library' }}
         />
         <Tab.Screen
             name="Settings"
