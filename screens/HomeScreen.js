@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
 import { db } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -12,23 +12,22 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.header}>Latest Posts</Text>
+        <Text style={styles.header} aria-level="3">Latest Posts</Text>
       </SafeAreaView>
 
-      <View style={styles.posts}>
+      <ScrollView style={styles.posts}>
         {sortedposts && sortedposts.map(post =>
-        <View style={styles.postWrapper}>
-          <Text style={styles.postTitle} key={post.id}>{post.title} by {post.username}</Text>
+        <View key={post.id} style={styles.postWrapper}>
+          <Text style={styles.postTitle}>{post.title} by {post.username}</Text>
           <Image
           style={styles.postPoster}
-          key={post.id+1}
           resizeMode={"cover"}
           source={{
             uri: `https://image.tmdb.org/t/p/w500/${post.poster}`
           }}/>
         </View>
         )}
-      </View>
+      </ScrollView>
 
     </View>
   );
