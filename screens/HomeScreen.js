@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ImageBackground } from 'react-native';
 import { db } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -11,7 +11,25 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {sortedposts && sortedposts.map(post => <Text key={post.id}>{post.title}</Text> )}
+      <SafeAreaView>
+        <Text style={styles.header}>Latest Posts</Text>
+      </SafeAreaView>
+
+      <View style={styles.posts}>
+        {sortedposts && sortedposts.map(post =>
+        <View style={styles.postWrapper}>
+          <ImageBackground
+          style={styles.postPoster}
+          key={post.id+1}
+          resizeMode={"cover"}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${post.poster}`
+          }}
+          ><Text style={styles.postTitle} key={post.id}>{post.title} by {post.username}</Text></ImageBackground>
+        </View>
+        )}
+      </View>
+
     </View>
   );
 };
@@ -19,8 +37,28 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#181D2F',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  header: {
+    color: 'white',
+    fontSize: 20,
+  },
+  posts: {
+    paddingTop: 10,
+  },
+  postWrapper: {
+    paddingTop: 10,
+    height: 150,
+    width: 300,
+    overflow : "hidden"
+  },
+  postTitle: {
+    color: 'white',
+  },
+  postPoster: {
+      width: "100%",
+      height: "100%",
+      resizeMode: "cover",
+  }
 });
