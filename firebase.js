@@ -1,8 +1,8 @@
-import firebase from "firebase/app"
-import "firebase/firestore"
+import firebase from 'firebase';
+import 'firebase/firestore'
 import {APIKey, AUTHD, PID, SB, MSID, APPID} from '@env';
 
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: APIKey,
     authDomain: AUTHD,
     projectId: PID,
@@ -11,8 +11,8 @@ var firebaseConfig = {
     appId: APPID,
 }
 
-if(!firebase.apps.length){firebase.initializeApp(firebaseConfig)}
+let Firebase = firebase.initializeApp(firebaseConfig)
 
-export const firestore = firebase.firestore()
+export const db = firebase.firestore()
 
-export default firebase
+export default Firebase
