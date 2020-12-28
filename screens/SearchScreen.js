@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TextInput, ImageBackground } from 'react-native';
 import axios from "axios";
 import {TMDBAPI} from '@env';
 
@@ -29,29 +29,21 @@ class SearchScreen extends React.Component {
     <View style={styles.container}>
       <SafeAreaView style={styles.header}>
         <TextInput editable
-            style={{ height: 40, width: '80%', borderColor: 'gray', borderWidth: 1, color: 'white' }}
+            style={styles.searchbar}
             onChangeText={text => this.setState({query: text}, () => this.search())}
             placeholder="Search Movie"
         />
       </SafeAreaView>
-    <ScrollView style={styles.posts}>
+      <ScrollView style={styles.posts}>
       <View style={styles.row}>
         {this.state.suggestions && this.state.suggestions.map(post =>
-        <View key={post.id} style={styles.column}>
-          { post.poster_path ? <Image
-          style={styles.postPoster}
-          resizeMode={"cover"}
-          source={{ uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` }}
-          /> : <Image
-          style={styles.postPoster}
-          resizeMode={"cover"}
-          source={{ uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}
-          />}
-          { post.release_date ? <Text style={styles.postTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.postTitle}>{post.title}</Text> }
-        </View>
+        <ImageBackground key={post.id} style={styles.column} source={ post.poster_path ? { uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` } : { uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}>
+          { post.release_date ? <Text style={styles.midTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.midTitle}>{post.title}</Text> }
+        </ImageBackground>
         )}
       </View>
       </ScrollView>
+
     </View>
   );
 };
@@ -76,6 +68,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 5,
     maxWidth: 200,
+    height: 250,
+    width: 150,
+    resizeMode: "cover",
+    borderRadius: 10,
   },
   posts: {
     paddingTop: 10,
@@ -89,14 +85,26 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
-  postTitle: {
+  midTitle: {
     color: 'white',
     fontSize: 15,
+    fontWeight: "bold",
+    textAlign: "center",
+    width: '100%',
+    backgroundColor: "#000000a0"
   },
   postPoster: {
-    height: 300,
-    width: 200,
+    height: 250,
+    width: 150,
     resizeMode: "cover",
+    borderRadius: 10,
+  },
+  searchbar: {
+    height: 40,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    color: 'white',
     borderRadius: 10,
   }
 });
