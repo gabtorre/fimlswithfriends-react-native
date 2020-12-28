@@ -1,27 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import Firebase, { db } from '../firebase';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import WatchList from '../components/Library/WatchList';
+import WatchedList from '../components/Library/WatchedList';
 
-export default function HomeScreen() {
+export default function LibraryScreen() {
 
   const auth = Firebase.auth();
   const currentUser = auth.currentUser.uid;
-  const [userdata] = useDocumentData(db.doc('users/' + currentUser));
 
   return (
-    <View style={styles.container}>
-      {userdata && userdata.watchlist.map(post => <Text key={post.id}>{post.title}</Text> )}
-    </View>
+    <ScrollView bounces={false}>
+      <WatchList key="watchlist" />
+      <WatchedList key="watchedlist" />
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
