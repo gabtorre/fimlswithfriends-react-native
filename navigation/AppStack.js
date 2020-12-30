@@ -20,7 +20,8 @@ const AppStack = () => {
               iconName = focused
                 ? 'home'
                 : 'home';
-            }  else if (route.name === 'Search') {
+            }
+            else if (route.name === 'Search') {
               iconName = focused ? 'search' : 'search';
             } else if (route.name === 'Library') {
               iconName = focused ? 'list' : 'list';
