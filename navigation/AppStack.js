@@ -1,11 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
-import LibraryScreen from '../screens/LibraryScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MovieStackScreen from './MovieStackScreen';
+import PostsStackScreen from './PostsStackScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +40,7 @@ const AppStack = () => {
       >
         <Tab.Screen
             name="Home"
-            component={HomeScreen}
+            component={PostsStackScreen}
             options={{ title: 'Home' }}
         />
         <Tab.Screen
@@ -50,9 +49,9 @@ const AppStack = () => {
             options={{ title: 'Search' }}
         />
         <Tab.Screen
-            name="MovieStack"
+            name="Library"
             component={MovieStackScreen}
-            options={{ title: 'MovieStack' }}
+            options={{ title: 'Library' }}
         />
         <Tab.Screen
             name="Settings"

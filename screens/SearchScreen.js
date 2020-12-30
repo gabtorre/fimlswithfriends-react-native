@@ -43,12 +43,12 @@ class SearchScreen extends React.Component {
           <ImageBackground key={post.id} style={styles.column} source={ post.poster_path ? { uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` } : { uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}>
           { post.release_date ? <Text style={styles.midTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.midTitle}>{post.title}</Text> }
         </ImageBackground>
-        <Rating
+        {/* <Rating
             readonly
             ratingCount={5}
             startingValue={post.vote_average/2}
             imageSize={30}
-          />
+          /> */}
         </View>
         )}
       </View>
