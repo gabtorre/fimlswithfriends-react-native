@@ -22,6 +22,7 @@ export default function LibraryScreen({ navigation }) {
               poster: movie.poster,
               date: movie.date,
               movieid: movie.movieid,
+              rating: movie.rating,
               list: "watchlist"
             })} >
               <Movie key={movie.movieid} title={movie.title} poster={movie.poster} />
@@ -32,7 +33,14 @@ export default function LibraryScreen({ navigation }) {
         <ScrollView horizontal bounces style={styles.scrollView}>
           {movies && movies.watched.map(movie =>
             <TouchableOpacity key={movie.movieid}
-            onPress={() => navigation.navigate('MyModal',{ title: movie.title })} >
+            onPress={() => navigation.navigate('MyModal', {
+              title: movie.title,
+              poster: movie.poster,
+              date: movie.date,
+              movieid: movie.movieid,
+              rating: movie.rating,
+              list: "watched"
+            })} >
               <Movie key={movie.movieid} title={movie.title} poster={movie.poster} />
             </TouchableOpacity>
           )}
