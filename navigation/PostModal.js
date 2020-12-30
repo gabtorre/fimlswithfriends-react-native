@@ -29,7 +29,7 @@ export default function PostModal({ route, navigation }) {
     rating,
   } = route.params;
 
-  console.log(comments)
+  // console.log(comments)
 
   return (
     <KeyboardAvoidingView
@@ -82,8 +82,8 @@ export default function PostModal({ route, navigation }) {
                   </View>
                 </View>
               </View>
-              { comments.length>0 ? <Comments data={comments} /> : null}
-              <AddComment />
+              { comments.length>0 ? <Comments comments={comments} /> : null}
+              <AddComment postid={postid} />
             </View>
           </View>
         </ScrollView>

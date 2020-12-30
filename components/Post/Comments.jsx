@@ -6,12 +6,12 @@ import {
   Image,
 } from "react-native";
 
-export default function Comments(props) {
-  let commentsArray = [props.data[0]];
+export default function Comments({comments}) {
 
   function generateComment(comments) {
     return comments.map((comment) => {
-      return (
+      {console.log(comment)}
+      return(
         <View key={comment.id} style={styles.commentWrapper}>
           <View style={styles.row}>
             <View style={styles.postLeft}>
@@ -35,11 +35,11 @@ export default function Comments(props) {
             </View>
           </View>
         </View>
-      );
+      )
     });
   }
 
-  return <View style={styles.sectionWrapper}>{commentsArray ? generateComment(commentsArray) : null}</View>;
+  return <View style={styles.sectionWrapper}>{comments ? generateComment(comments) : null}</View>;
 }
 
 const styles = StyleSheet.create({
