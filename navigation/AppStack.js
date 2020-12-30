@@ -5,6 +5,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
 import LibraryScreen from '../screens/LibraryScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MovieStackScreen from './MovieStackScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,9 +50,9 @@ const AppStack = () => {
             options={{ title: 'Search' }}
         />
         <Tab.Screen
-            name="Library"
-            component={LibraryScreen}
-            options={{ title: 'Library' }}
+            name="MovieStack"
+            component={MovieStackScreen}
+            options={{ title: 'MovieStack' }}
         />
         <Tab.Screen
             name="Settings"
