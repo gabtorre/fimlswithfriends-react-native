@@ -4,7 +4,7 @@ import DeleteButton from '../components/Library/DeleteButton';
 
 export default function MovieModal({ route, navigation }) {
 
-  const { title, poster, movieid, date, list } = route.params;
+  const { title, poster, movieid, date, rating, list } = route.params;
 
   return (
     <View style={styles.container}>
@@ -17,7 +17,7 @@ export default function MovieModal({ route, navigation }) {
       <View style={styles.wrapper}>
         <Text style={styles.title}>{title}</Text>
         <Button onPress={() => navigation.goBack()} title="Dismiss" />
-        <DeleteButton title={title} poster={poster} movieid={movieid} date={date} list={list} />
+        <DeleteButton title={title} poster={poster} movieid={movieid} date={date} list={list} rating={rating} navigation={navigation} />
       </View>
     </View>
   );
