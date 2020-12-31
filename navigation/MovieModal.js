@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import DeleteButton from '../components/Library/DeleteButton';
+import WatchButton from '../components/Library/WatchButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function MovieModal({ route, navigation }) {
@@ -21,6 +22,7 @@ export default function MovieModal({ route, navigation }) {
       <View style={styles.wrapper}>
         <Text style={styles.title}>{title}</Text>
         <DeleteButton title={title} poster={poster} movieid={movieid} date={date} list={list} rating={rating} navigation={navigation} />
+        <WatchButton title={title} poster={poster} movieid={movieid} date={date} navigation={navigation} />
       </View>
     </View>
   );

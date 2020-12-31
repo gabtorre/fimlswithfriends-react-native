@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
+import WatchButton from '../components/Library/WatchButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment";
 
@@ -51,6 +52,7 @@ export default function PostModal({ route, navigation }) {
               }}
             >
             </ImageBackground>
+            <WatchButton title={title} poster={poster} movieid={movieid} date={date} navigation={navigation} />
             <View key={postid} style={styles.postBigWrapper}>
               <View style={styles.sectionWrapper}>
                 <View key={postid} style={styles.postWrapper}>
