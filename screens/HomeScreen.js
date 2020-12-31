@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { db } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import moment from 'moment'
 
-export default function HomeScreen() {
+export default function Posts({ navigation }) {
 
   const postRef = db.collection('posts');
   const sortedPostsRef = postRef.orderBy('createdAt', 'desc');
@@ -18,7 +18,22 @@ export default function HomeScreen() {
 
       <ScrollView style={styles.posts}>
       <View style={styles.container}>
+
         {sortedposts && sortedposts.map(post =>
+        <TouchableOpacity style={styles.container} key={post.id}
+        onPress={() => navigation.navigate('PostModal', {
+          title: post.title,
+          poster: post.poster,
+          date: post.release.substring(0, 4),
+          movieid: post.movieid,
+          postid: post.id,
+          comments: post.comments,
+          photoURL: post.photoURL,
+          rating: post.rating,
+          text: post.text,
+          username: post.username
+        })} >
+
         <View key={post.id} style={styles.postWrapper}>
           <View style={styles.row}>
 
@@ -49,7 +64,9 @@ export default function HomeScreen() {
 
           </View>
         </View>
+        </TouchableOpacity>
         )}
+
       </View>
       </ScrollView>
 
