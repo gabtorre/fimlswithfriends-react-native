@@ -13,7 +13,7 @@ export default function Posts({ navigation }) {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <Text style={styles.header} aria-level="3">Activicty Feed</Text>
+        <Text style={styles.header} aria-level="3">Activity Feed</Text>
       </SafeAreaView>
 
       <ScrollView style={styles.posts}>

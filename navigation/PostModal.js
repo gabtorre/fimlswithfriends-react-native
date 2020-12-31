@@ -10,9 +10,11 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment";
 
 export default function PostModal({ route, navigation }) {
@@ -37,6 +39,9 @@ export default function PostModal({ route, navigation }) {
       style={{ flex: 1 }}
     >
         <ScrollView style={styles.posts}>
+          <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()} >
+            <Ionicons name="close" size={32} color="white" />
+          </TouchableOpacity>
           <View style={styles.container}>
             <ImageBackground
               style={styles.postPoster}
@@ -44,12 +49,7 @@ export default function PostModal({ route, navigation }) {
               source={{
                 uri: `https://image.tmdb.org/t/p/w500/${poster}`,
               }}
-            ><SafeAreaView>
-              <Button
-                style={styles.closeBtn}
-                onPress={() => navigation.goBack()}
-                title="close"
-              /></SafeAreaView>
+            >
             </ImageBackground>
             <View key={postid} style={styles.postBigWrapper}>
               <View style={styles.sectionWrapper}>
@@ -171,10 +171,10 @@ const styles = StyleSheet.create({
     minWidth: "100%",
     resizeMode: "cover",
   },
-  closeBtn: {
-    position: "absolute",
-    top: 5,
+  close: {
+    position: 'absolute',
     right: 5,
-    zIndex: 2,
-  },
+    top: 5,
+    zIndex: 999,
+  }
 });
