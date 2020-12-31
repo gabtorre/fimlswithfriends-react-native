@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import DeleteButton from '../components/Library/DeleteButton';
+import WatchButton from '../components/Library/WatchButton';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function MovieModal({ route, navigation }) {
 
@@ -8,6 +10,9 @@ export default function MovieModal({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()} >
+        <Ionicons name="close" size={32} color="white" />
+      </TouchableOpacity>
       <Image
       style={styles.image}
       source={{
@@ -16,8 +21,8 @@ export default function MovieModal({ route, navigation }) {
       />
       <View style={styles.wrapper}>
         <Text style={styles.title}>{title}</Text>
-        <Button onPress={() => navigation.goBack()} title="Dismiss" />
         <DeleteButton title={title} poster={poster} movieid={movieid} date={date} list={list} rating={rating} navigation={navigation} />
+        <WatchButton title={title} poster={poster} movieid={movieid} date={date} navigation={navigation} />
       </View>
     </View>
   );
@@ -40,6 +45,13 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 500,
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
+  close: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    zIndex: 999,
+  }
 });
