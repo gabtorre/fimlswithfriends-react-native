@@ -11,7 +11,8 @@ export default function AddComment({postid}) {
     const auth = firebase.auth();
 
     const handleCommentSubmission = async () => {
-        const postRef = await db.collection("posts").doc(postid);
+        if(comment){
+          const postRef = await db.collection("posts").doc(postid);
         async function addComment() {
             let newComment = {
                 content: comment,
@@ -28,6 +29,7 @@ export default function AddComment({postid}) {
             setComment("")
         }
         addComment()
+        }
     }
 
   return (
