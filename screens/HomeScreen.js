@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { db } from '../firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import moment from 'moment'
+import moment from 'moment';
 
 export default function Posts({ navigation }) {
 
@@ -16,7 +16,7 @@ export default function Posts({ navigation }) {
         <Text style={styles.header} aria-level="3">Activity Feed</Text>
       </SafeAreaView>
 
-      <ScrollView style={styles.posts}>
+      <ScrollView bounces={false} style={styles.posts}>
       <View style={styles.container}>
 
         {sortedposts && sortedposts.map(post =>
@@ -31,7 +31,8 @@ export default function Posts({ navigation }) {
           photoURL: post.photoURL,
           rating: post.rating,
           text: post.text,
-          username: post.username
+          username: post.username,
+          createdAt: post.createdAt,
         })} >
 
         <View key={post.id} style={styles.postWrapper}>

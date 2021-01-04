@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
@@ -30,16 +31,17 @@ export default function PostModal({ route, navigation }) {
     text,
     username,
     rating,
+    createdAt,
   } = route.params;
 
   // console.log(comments)
 
   return (
     <KeyboardAvoidingView
-
       style={{ flex: 1 }}
     >
-        <ScrollView style={styles.posts}>
+    <StatusBar hidden />
+        <ScrollView bounces={false} style={styles.posts}>
           <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()} >
             <Ionicons name="close" size={32} color="white" />
           </TouchableOpacity>
@@ -77,7 +79,7 @@ export default function PostModal({ route, navigation }) {
                           {username} rated {rating} stars
                         </Text>
                         <Text style={styles.postText}>
-                          submitted {moment(date).fromNow()}
+                          submitted {moment(createdAt.toDate()).fromNow()}
                         </Text>
                       </View>
                     </View>
