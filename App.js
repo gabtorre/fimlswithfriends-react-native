@@ -1,13 +1,17 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Navigation from './navigation';
+import firebase from "firebase/app";
 
 export default function App() {
 
+  const auth = firebase.auth();
+  const currentUser = auth.currentUser
+
   return (
     <View style={styles.container}>
-      <Navigation />
+      <Navigation currentUser={currentUser} />
       <StatusBar />
     </View>
   );
