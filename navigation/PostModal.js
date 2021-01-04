@@ -8,6 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   TouchableOpacity,
+  StatusBar
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
@@ -86,7 +87,6 @@ export default function PostModal({ route, navigation }) {
                       <Text style={styles.postText}>
                         submitted {moment(createdAt.toDate()).fromNow()}
                       </Text>
-
                     </View>
                   </View>
                 </View>

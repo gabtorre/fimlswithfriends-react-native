@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, TouchableOpacity, StatusBar} from 'react-native';
 import DeleteButton from '../components/Library/DeleteButton';
 import WatchButton from '../components/Library/WatchButton';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,6 +10,7 @@ export default function MovieModal({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+    <StatusBar hidden />
       <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()} >
         <Ionicons name="close" size={32} color="white" />
       </TouchableOpacity>

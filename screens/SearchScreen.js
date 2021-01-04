@@ -3,29 +3,30 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Tex
 import axios from "axios";
 import {TMDBAPI} from '@env';
 import { Rating } from 'react-native-ratings';
+import AddPostModal from '../navigation/AddPostModal';
 
 class SearchScreen extends React.Component {
-    state = {
-        query: "",
-        suggestions: null,
-        searched: false,
-        TMDBAPI: TMDBAPI,
-    };
+  state = {
+      query: "",
+      suggestions: null,
+      searched: false,
+      TMDBAPI: TMDBAPI,
+  };
 
-    search = () =>{
-        if(this.state.query){
-            axios(`https://api.themoviedb.org/3/search/movie?api_key=${this.state.TMDBAPI}&language=en-US&query=${this.state.query}&page=1&include_adult=false`)
-            .then(result =>
-                {
-                    this.setState({
-                      suggestions: result.data.results
-                    })
-                }
-            ).catch(error => { console.error(error); return Promise.reject(error); });
-        }
+  search = () =>{
+    if(this.state.query){
+        axios(`https://api.themoviedb.org/3/search/movie?api_key=${this.state.TMDBAPI}&language=en-US&query=${this.state.query}&page=1&include_adult=false`)
+        .then(result =>
+            {
+                this.setState({
+                  suggestions: result.data.results
+                })
+            }
+        ).catch(error => { console.error(error); return Promise.reject(error); });
     }
+  }
 
-    render() {
+  render() {
 
   return (
     <View style={styles.container}>
@@ -40,7 +41,7 @@ class SearchScreen extends React.Component {
       <View style={styles.row}>
         {this.state.suggestions && this.state.suggestions.map(post =>
         <TouchableOpacity style={styles.movie} key={post.id}
-        onPress={() => this.props.navigation.navigate('SearchModal', {
+        onPress={() => this.props.navigation.navigate('AddPostModal', {
           title: post.title,
           poster: post.poster_path,
           date: post.release_date,
@@ -53,12 +54,7 @@ class SearchScreen extends React.Component {
             <ImageBackground key={post.id} style={styles.column} source={ post.poster_path ? { uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` } : { uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}>
             { post.release_date ? <Text style={styles.midTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.midTitle}>{post.title}</Text> }
           </ImageBackground>
-          {/* <Rating
-              readonly
-              ratingCount={5}
-              startingValue={post.vote_average/2}
-              imageSize={30}
-            /> */}
+
 
         </TouchableOpacity>
         )}
