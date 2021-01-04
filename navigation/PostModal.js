@@ -30,7 +30,6 @@ export default function PostModal({ route, navigation }) {
     text,
     username,
     rating,
-    createdAt,
   } = route.params;
 
   const [comments] = useDocumentData(db.doc('posts/' + postid));
