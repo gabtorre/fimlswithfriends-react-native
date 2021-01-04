@@ -17,6 +17,8 @@ import AddComment from "../components/Post/AddComment";
 import WatchButton from "../components/Library/WatchButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import moment from "moment";
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import Firebase, { db } from '../firebase';
 
 export default function PostModal({ route, navigation }) {
   const {
@@ -24,7 +26,7 @@ export default function PostModal({ route, navigation }) {
     poster,
     movieid,
     date,
-    comments,
+    // comments,
     postid,
     photoURL,
     text,
@@ -32,7 +34,8 @@ export default function PostModal({ route, navigation }) {
     rating,
   } = route.params;
 
-  // console.log(comments)
+  const [comments] = useDocumentData(db.doc('posts/' + postid));
+
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -89,7 +92,7 @@ export default function PostModal({ route, navigation }) {
                 </View>
               </View>
             </View>
-            {comments.length > 0 ? <Comments comments={comments} /> : null}
+            {comments ? <Comments comments={comments.comments} /> : null}
             <AddComment postid={postid} />
           </View>
         </View>
