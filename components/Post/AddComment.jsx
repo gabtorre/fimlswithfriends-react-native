@@ -1,48 +1,54 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TextInput, Button, Form } from "react-native";
+import React, { useContext, useState } from "react";
+import { StyleSheet, View, TextInput, Button } from "react-native";
 import firebase from "firebase/app";
-import {db} from "../../firebase";
+import { db } from "../../firebase";
+import {AuthContext} from "../../navigation/AuthProvider"
 
-export default function AddComment({postid}) {
+export default function AddComment({ postid }) {
+  const [comment, setComment] = useState("");
+  const {user, setUser} = useContext(AuthContext);
 
-
-  const [comment, setComment] = useState('');
-
-    const auth = firebase.auth();
-
-    const handleCommentSubmission = async () => {
-        if(comment){
-          const postRef = await db.collection("posts").doc(postid);
-        async function addComment() {
-            let newComment = {
-                content: comment,
-                id: Date.now(),
-                createdAt: Date.now(),
-                username: auth.currentUser.displayName,
-                photoURL: auth.currentUser.photoURL,
-                uid: auth.currentUser.uid
-            }
-            await postRef.update({comments: firebase.firestore.FieldValue.arrayUnion(newComment)})
-            .catch(err => {
-                console.error('error adding comment: ', err)
-            })
-            setComment("")
-        }
-        addComment()
-        }
+  const handleCommentSubmission = async () => {
+    if (comment) {
+      const postRef = await db.collection("posts").doc(postid);
+      async function addComment() {
+        let newComment = {
+          content: comment,
+          id: Date.now(),
+          createdAt: Date.now(),
+          username: user.displayName,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+        await postRef
+          .update({
+            comments: firebase.firestore.FieldValue.arrayUnion(newComment),
+          })
+          .catch((err) => {
+            console.error("error adding comment: ", err);
+          });
+        setComment("");
+      }
+      addComment();
     }
+  };
 
   return (
     <View style={styles.sectionWrapper}>
       <View style={styles.commentWrapper}>
         <View style={styles.row}>
           <TextInput
-            style={{ height: 40, flex: 0.9 , color: "white" }}
+            style={{ height: 40, flex: 0.9, color: "white" }}
             placeholder="Enter Comment Here"
             placeholderTextColor="grey"
-            onChangeText={text => setComment(text)}
+            onChangeText={(text) => setComment(text)}
           />
-          <Button style={{flex: 0.1}} title="submit" onPress={() => handleCommentSubmission()} type="submit"/>
+          <Button
+            style={{ flex: 0.1 }}
+            title="submit"
+            onPress={() => handleCommentSubmission()}
+            type="submit"
+          />
         </View>
       </View>
     </View>

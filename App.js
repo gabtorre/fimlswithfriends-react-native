@@ -6,12 +6,9 @@ import firebase from "firebase/app";
 
 export default function App() {
 
-  const auth = firebase.auth();
-  const currentUser = auth.currentUser
-
   return (
     <View style={styles.container}>
-      <Navigation currentUser={currentUser} />
+      <Navigation />
       <StatusBar />
     </View>
   );
