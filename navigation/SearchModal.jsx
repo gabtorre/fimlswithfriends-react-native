@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import moment from "moment";
+import AddPost from '../components/Post/AddPost'
 import { WatchButton } from "../components/Post/LikeButton";
 import { db } from "../firebase";
 
@@ -44,10 +44,11 @@ export default function SearchModal({ route, navigation }) {
           </View>
           <View key={movieid} style={styles.postBigWrapper}>
             <View style={styles.sectionWrapper}>
+                <Text style={styles.header}>{title} ({year})</Text>
               <View key={movieid} style={styles.movieWrapper}>
-                <Text style={styles.header}>{title}</Text>
                 <Text style={styles.overviewText}>{overview}</Text>
               </View>
+              <AddPost/>
             </View>
           </View>
         </View>
@@ -112,10 +113,10 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   movieWrapper: {
-    padding: 50,
+    padding: 20,
     alignItems: "center",
     width: "100%",
-    margin: 5,
+
   },
   postBigWrapper: {
     padding: 10,
