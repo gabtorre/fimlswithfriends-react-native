@@ -26,7 +26,7 @@ export default function PostModal({ route, navigation }) {
     poster,
     movieid,
     date,
-    // comments,
+    createdAt,
     postid,
     photoURL,
     text,
@@ -35,7 +35,6 @@ export default function PostModal({ route, navigation }) {
   } = route.params;
 
   const [comments] = useDocumentData(db.doc('posts/' + postid));
-
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
@@ -85,7 +84,7 @@ export default function PostModal({ route, navigation }) {
                         {username} rated {rating} stars
                       </Text>
                       <Text style={styles.postText}>
-                        submitted {moment(date).fromNow()}
+                        submitted {moment(createdAt.toDate()).fromNow()}
                       </Text>
                     </View>
                   </View>

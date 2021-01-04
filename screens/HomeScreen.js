@@ -31,7 +31,8 @@ export default function Posts({ navigation }) {
           photoURL: post.photoURL,
           rating: post.rating,
           text: post.text,
-          username: post.username
+          username: post.username,
+          createdAt: post.createdAt
         })} >
 
         <View key={post.id} style={styles.postWrapper}>
