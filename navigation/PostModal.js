@@ -3,20 +3,19 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Platform,
   Image,
   ImageBackground,
   ScrollView,
   KeyboardAvoidingView,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
-import WatchButton from '../components/Library/WatchButton';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from "react-native-vector-icons/Ionicons";
 import moment from "moment";
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import  {WatchButton, LikeButton} from "../components/Post/LikeButton"
+import { db } from '../firebase';
 
 export default function PostModal({ route, navigation }) {
   const {
@@ -24,7 +23,7 @@ export default function PostModal({ route, navigation }) {
     poster,
     movieid,
     date,
-    comments,
+    createdAt,
     postid,
     photoURL,
     text,
@@ -32,63 +31,72 @@ export default function PostModal({ route, navigation }) {
     rating,
   } = route.params;
 
-  // console.log(comments)
+  const [comments] = useDocumentData(db.doc('posts/' + postid));
 
   return (
-    <KeyboardAvoidingView
-
-      style={{ flex: 1 }}
-    >
-        <ScrollView style={styles.posts}>
-          <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()} >
-            <Ionicons name="close" size={32} color="white" />
-          </TouchableOpacity>
-          <View style={styles.container}>
-            <ImageBackground
-              style={styles.postPoster}
-              resizeMode={"cover"}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500/${poster}`,
-              }}
-            >
-            </ImageBackground>
-            <WatchButton title={title} poster={poster} movieid={movieid} date={date} navigation={navigation} />
-            <View key={postid} style={styles.postBigWrapper}>
-              <View style={styles.sectionWrapper}>
-                <View key={postid} style={styles.postWrapper}>
-                  <View style={styles.row}>
-                    <View style={styles.postLeft}>
-                      <View style={styles.postWrapper}>
-                        <View style={styles.row}>
-                          <Image
-                            style={styles.profilepic}
-                            source={{
-                              uri: `${photoURL}`,
-                            }}
-                          />
-                        </View>
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <TouchableOpacity
+        style={styles.close}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="close" size={32} color="white" />
+      </TouchableOpacity>
+      <ScrollView style={styles.posts}>
+        <View style={styles.container}>
+          <ImageBackground
+            style={styles.postPoster}
+            resizeMode={"cover"}
+            source={{
+              uri: `https://image.tmdb.org/t/p/w500/${poster}`,
+            }}
+          ></ImageBackground>
+          <View style={styles.btnsRow}>
+          <WatchButton
+            style={styles.add}
+            title={title}
+            poster={poster}
+            movieid={movieid}
+            date={date}
+            navigation={navigation}
+          />
+          <LikeButton postid={postid} />
+          </View>
+          <View key={postid} style={styles.postBigWrapper}>
+            <View style={styles.sectionWrapper}>
+              <View key={postid} style={styles.postWrapper}>
+                <View style={styles.row}>
+                  <View style={styles.postLeft}>
+                    <View style={styles.postWrapper}>
+                      <View style={styles.row}>
+                        <Image
+                          style={styles.profilepic}
+                          source={{
+                            uri: `${photoURL}`,
+                          }}
+                        />
                       </View>
                     </View>
+                  </View>
+                  <View style={styles.postRight}>
+                    <Text style={styles.postTitle}>{text}</Text>
+                    <View style={styles.minicolumn}>
+                      <Text style={styles.postText}>
+                        {username} rated {rating} stars
+                      </Text>
+                      <Text style={styles.postText}>
+                        submitted {moment(createdAt.toDate()).fromNow()}
+                      </Text>
 
-                    <View style={styles.postRight}>
-                      <Text style={styles.postTitle}>{text}</Text>
-                      <View style={styles.minicolumn}>
-                        <Text style={styles.postText}>
-                          {username} rated {rating} stars
-                        </Text>
-                        <Text style={styles.postText}>
-                          submitted {moment(date).fromNow()}
-                        </Text>
-                      </View>
                     </View>
                   </View>
                 </View>
               </View>
-              { comments.length>0 ? <Comments comments={comments} /> : null}
-              <AddComment postid={postid} />
             </View>
+            {comments ? <Comments comments={comments.comments} /> : null}
+            <AddComment postid={postid} />
           </View>
-        </ScrollView>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -97,6 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
+    height: '100%',
     backgroundColor: "#181D2F",
     alignItems: "center",
   },
@@ -174,9 +183,19 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   close: {
-    position: 'absolute',
-    right: 5,
-    top: 5,
+    position: "absolute",
+    right: "5%",
+    top: "5%",
     zIndex: 999,
-  }
+    shadowOffset: { width: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+  },
+  btnsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
