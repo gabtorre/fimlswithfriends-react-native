@@ -27,6 +27,8 @@ export default function AddPostModal({ route, navigation }) {
 
   const movieDetails = { movieid, title, date, poster };
 
+  console.log(movieDetails)
+
   const newPost = {
     text,
     movieid,
@@ -48,7 +50,8 @@ export default function AddPostModal({ route, navigation }) {
       watched: firebase.firestore.FieldValue.arrayUnion(movieDetails),
     });
 
-    await postRef.add(newPost).then(async () => {
+    await postRef.add(newPost)
+    .then(async () => {
       navigation.goBack();
     });
     onChangeText("");
