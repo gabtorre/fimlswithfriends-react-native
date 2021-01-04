@@ -14,10 +14,10 @@ import {
 } from "react-native";
 import Comments from "../components/Post/Comments";
 import AddComment from "../components/Post/AddComment";
-import WatchButton from "../components/Library/WatchButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import moment from "moment";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import  {WatchButton, LikeButton} from "../components/Post/LikeButton"
 import Firebase, { db } from '../firebase';
 
 export default function PostModal({ route, navigation }) {
@@ -53,13 +53,17 @@ export default function PostModal({ route, navigation }) {
               uri: `https://image.tmdb.org/t/p/w500/${poster}`,
             }}
           ></ImageBackground>
+          <View style={styles.btnsRow}>
           <WatchButton
+            style={styles.add}
             title={title}
             poster={poster}
             movieid={movieid}
             date={date}
             navigation={navigation}
           />
+          <LikeButton postid={postid} />
+          </View>
           <View key={postid} style={styles.postBigWrapper}>
             <View style={styles.sectionWrapper}>
               <View key={postid} style={styles.postWrapper}>
@@ -76,7 +80,6 @@ export default function PostModal({ route, navigation }) {
                       </View>
                     </View>
                   </View>
-
                   <View style={styles.postRight}>
                     <Text style={styles.postTitle}>{text}</Text>
                     <View style={styles.minicolumn}>
@@ -86,6 +89,7 @@ export default function PostModal({ route, navigation }) {
                       <Text style={styles.postText}>
                         submitted {moment(createdAt.toDate()).fromNow()}
                       </Text>
+
                     </View>
                   </View>
                 </View>
@@ -189,5 +193,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2 },
     shadowColor: "black",
     shadowOpacity: 0.5,
+  },
+  btnsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
