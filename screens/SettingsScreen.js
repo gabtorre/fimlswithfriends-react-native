@@ -6,8 +6,7 @@ import { AuthContext } from '../navigation/AuthProvider';
 
 export default function SettingsScreen() {
 
-  const auth = Firebase.auth();
-  const currentUser = auth.currentUser;
+  const {user} = useContext(AuthContext);
 
   const {logout} = useContext(AuthContext);
 
@@ -17,14 +16,14 @@ export default function SettingsScreen() {
         style={styles.profilepic}
         resizeMode={"cover"}
         source={{
-          uri: currentUser.photoURL
+          uri: user.photoURL
         }}/>
-      <Text style={styles.text}>{currentUser.displayName}</Text>
+      <Text style={styles.text}>{user.displayName}</Text>
       <TouchableHighlight
-				style={styles.loginBtn}
+				style={styles.logoutBtn}
 				onPress={() => logout()}
 			>
-				<Text style={styles.loginBtnText}>LOGOUT</Text>
+				<Text style={styles.logoutBtnText}>LOGOUT</Text>
 			</TouchableHighlight>
     </View>
   );
@@ -45,14 +44,14 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
   },
-  loginBtn: {
+  logoutBtn: {
 		backgroundColor: '#DC3545',
     width: 300,
     padding: 5,
     borderRadius: 10,
     marginTop: 50
 	},
-	loginBtnText: {
+	logoutBtnText: {
     color: '#F5F5F1',
     textAlign: "center",
     padding: 3,

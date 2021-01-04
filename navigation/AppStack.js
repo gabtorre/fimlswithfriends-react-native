@@ -5,7 +5,7 @@ import SearchScreen from '../screens/SearchScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MovieStackScreen from './MovieStackScreen';
 import PostsStackScreen from './PostsStackScreen';
-import SearchStackScreen from './SearchStackScreen';
+import SearchStackScreen from './SearchStackScreen'
 
 const Tab = createBottomTabNavigator();
 

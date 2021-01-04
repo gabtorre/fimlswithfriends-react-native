@@ -4,11 +4,11 @@ import firebase from "firebase/app";
 import { db } from "../../firebase";
 import {AuthContext} from "../../navigation/AuthProvider"
 
-export default function AddComment({ postid }) {
-  const [comment, setComment] = useState("");
+export default function AddPost(props) {
+  const [post, setPost] = useState(null);
   const {user, setUser} = useContext(AuthContext);
 
-  const handleCommentSubmission = async () => {
+  const handlePostSubmission = async () => {
     if (comment) {
       const postRef = await db.collection("posts").doc(postid);
       async function addComment() {
@@ -36,17 +36,16 @@ export default function AddComment({ postid }) {
   return (
     <View style={styles.sectionWrapper}>
       <View style={styles.commentWrapper}>
-        <View style={styles.row}>
+        <View >
           <TextInput
-            style={{ height: 40, flex: 0.9, color: "white" }}
-            placeholder="Enter Comment Here"
+            style={{ height: 100, color: "white" }}
+            placeholder="What do you think?"
             placeholderTextColor="grey"
-            onChangeText={(text) => setComment(text)}
+            onChangeText={(text) => setPost(text)}
           />
           <Button
-            style={{ flex: 0.1 }}
-            title="submit"
-            onPress={() => handleCommentSubmission()}
+            title="share"
+            onPress={() => handlePostSubmission()}
             type="submit"
           />
         </View>
