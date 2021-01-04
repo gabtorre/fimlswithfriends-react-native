@@ -6,7 +6,7 @@
 Films with Friends Mobile is a mobile app for rating and talking about movies that lets members post twitter-style hot takes on movies, share said reviews with friends for comments and discussion, and maintain lists of movies seen and movies yet-to-watch
 
 <div style="margin-top: 5px; margin-bottom: 15px;">
-  <!-- <img src="public/moviegif.gif"/> -->
+  <img src="assets/Demo/V1_Demo.gif"/>
 </div>
 Demo Login: demo@gmail.com | Password: Demo2020
 <hr/>
