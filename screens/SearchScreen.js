@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, TextInput, ImageBackground } from 'react-native';
 import axios from "axios";
 import {TMDBAPI} from '@env';
 import { Rating } from 'react-native-ratings';
@@ -39,17 +39,28 @@ class SearchScreen extends React.Component {
       <ScrollView style={styles.posts}>
       <View style={styles.row}>
         {this.state.suggestions && this.state.suggestions.map(post =>
-        <View style={styles.movie}>
-          <ImageBackground key={post.id} style={styles.column} source={ post.poster_path ? { uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` } : { uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}>
-          { post.release_date ? <Text style={styles.midTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.midTitle}>{post.title}</Text> }
-        </ImageBackground>
-        {/* <Rating
-            readonly
-            ratingCount={5}
-            startingValue={post.vote_average/2}
-            imageSize={30}
-          /> */}
-        </View>
+        <TouchableOpacity style={styles.movie} key={post.id}
+        onPress={() => this.props.navigation.navigate('SearchModal', {
+          title: post.title,
+          poster: post.poster_path,
+          date: post.release_date,
+          year: post.release_date.substring(0, 4),
+          movieid: post.movieid,
+          overview: post.overview,
+          rating: post.vote_average,
+        })} >
+
+            <ImageBackground key={post.id} style={styles.column} source={ post.poster_path ? { uri: `https://image.tmdb.org/t/p/w500/${post.poster_path}` } : { uri: "https://user-images.githubusercontent.com/10515204/56117400-9a911800-5f85-11e9-878b-3f998609a6c8.jpg" }}>
+            { post.release_date ? <Text style={styles.midTitle}>{post.title} ({post.release_date.substring(0, 4)})</Text> : <Text style={styles.midTitle}>{post.title}</Text> }
+          </ImageBackground>
+          {/* <Rating
+              readonly
+              ratingCount={5}
+              startingValue={post.vote_average/2}
+              imageSize={30}
+            /> */}
+
+        </TouchableOpacity>
         )}
       </View>
       </ScrollView>
