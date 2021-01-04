@@ -32,7 +32,7 @@ export default function Posts({ navigation }) {
           rating: post.rating,
           text: post.text,
           username: post.username,
-          createdAt: post.createdAt,
+          createdAt: post.createdAt
         })} >
 
         <View key={post.id} style={styles.postWrapper}>
@@ -46,7 +46,7 @@ export default function Posts({ navigation }) {
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500/${post.poster}`
                 }}/>
-                <Text style={styles.postText}>{post.likes.length} Likes </Text>
+                <Text style={styles.postText}>{post.comments.length} Comments </Text>
               </View>
             </View>
 
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    height: '100%',
     backgroundColor: '#181D2F',
     alignItems: 'center',
   },

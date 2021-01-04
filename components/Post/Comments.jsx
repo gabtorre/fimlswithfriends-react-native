@@ -10,7 +10,6 @@ export default function Comments({comments}) {
 
   function generateComment(comments) {
     return comments.map((comment) => {
-      {console.log(comment)}
       return(
         <View key={comment.id} style={styles.commentWrapper}>
           <View style={styles.row}>
