@@ -46,7 +46,7 @@ export default function Posts({ navigation }) {
                 source={{
                   uri: `https://image.tmdb.org/t/p/w500/${post.poster}`
                 }}/>
-                <Text style={styles.postText}>{post.likes.length} Likes </Text>
+                <Text style={styles.postText}>{post.comments.length} Comments </Text>
               </View>
             </View>
 
