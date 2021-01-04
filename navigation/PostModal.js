@@ -3,13 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Platform,
   Image,
   ImageBackground,
   ScrollView,
   KeyboardAvoidingView,
-  SafeAreaView,
   TouchableOpacity,
 } from "react-native";
 import Comments from "../components/Post/Comments";
@@ -18,7 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import moment from "moment";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import  {WatchButton, LikeButton} from "../components/Post/LikeButton"
-import Firebase, { db } from '../firebase';
+import { db } from '../firebase';
 
 export default function PostModal({ route, navigation }) {
   const {
