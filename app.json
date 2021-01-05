@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "fwf-react-native",
-    "slug": "fwf-react-native",
+    "name": "fimls with friends wip",
+    "slug": "fimls-with-friends-wip",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,6 +27,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

@@ -56,7 +56,7 @@ export default function Posts({ navigation }) {
                   uri: `${post.photoURL}`}}/>
                   <View style={styles.minicolumn}>
                     <Text style={styles.postText}> {post.username}</Text>
-                    <Text style={styles.postText}> Rated {post.rating} stars {moment(post.createdAt.toDate()).fromNow()}</Text>
+                    {post.createdAt ? <Text style={styles.postText}> Rated {post.rating} stars {moment(post.createdAt.toDate()).fromNow()}</Text> : null }
                   </View>
                 </View>
               <Text style={styles.postTitle}>{post.text}</Text>
