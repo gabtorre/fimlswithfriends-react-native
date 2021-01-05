@@ -32,7 +32,7 @@
     "react-native-scripts": "^2.0.1",
     "react-native-web": "~0.13.12",
     "expo-linear-gradient": "~8.4.0",
-    "react-native-stars": "^1.2.2",
+    "react-native-stars": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
