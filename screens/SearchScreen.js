@@ -34,7 +34,8 @@ class SearchScreen extends React.Component {
         <TextInput editable
             style={styles.searchbar}
             onChangeText={text => this.setState({query: text}, () => this.search())}
-            placeholder="Search Movie"
+            placeholder="Movie Lookup"
+            placeholderTextColor="grey"
         />
       </SafeAreaView>
       <ScrollView style={styles.posts}>
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: 'white',
     borderRadius: 10,
+    padding: 5,
   }
 });
 export default SearchScreen;
