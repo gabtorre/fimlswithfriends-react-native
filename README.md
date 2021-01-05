@@ -13,9 +13,10 @@ Demo Login: demo@gmail.com | Password: Demo2020
 
 ## colors
 Font: off-white - ![#F5F5F1](https://via.placeholder.com/15/F5F5F1/000000?text=+) `#F5F5F1`
-Buttons: red - ![#DC3545](https://via.placeholder.com/15/DC3545/000000?text=+) `#FFEDED`
+Buttons: red - ![#DC3545](https://via.placeholder.com/15/DC3545/000000?text=+) `#DC3545`
+Seconary-Buttons: darker - ![#B81D24](https://via.placeholder.com/15/B81D24/000000?text=+) `#B81D24`
 Primary-Background - ![#181D2F](https://via.placeholder.com/15/181D2F/000000?text=+) `#181D2F`
-Seconary-Background: darker - ![#B81D24](https://via.placeholder.com/15/B81D24/000000?text=+) `#B81D24`
+Seconary-Background: lighter - ![#0E111D](https://via.placeholder.com/15/0E111D/000000?text=+) `#0E111D`
 
 ## mvp features
 - allow user login
