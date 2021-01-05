@@ -9,16 +9,18 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
-  StatusBar,
 } from "react-native";
 import Firebase, { db } from "../firebase";
 import firebase from "firebase";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { WatchButton } from "../components/Post/LikeButton";
+import Stars from "react-native-stars";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function AddPostModal({ route, navigation }) {
   const [text, onChangeText] = useState("");
   const { title, poster, movieid, year, date, overview, rating } = route.params;
+  const [star, setStar] = useState(rating/2);
 
   const auth = Firebase.auth();
   const uid = auth.currentUser.uid;
@@ -27,7 +29,7 @@ export default function AddPostModal({ route, navigation }) {
 
   const movieDetails = { movieid, title, date, poster };
 
-  console.log(movieDetails)
+  console.log(movieDetails);
 
   const newPost = {
     text,
@@ -38,7 +40,7 @@ export default function AddPostModal({ route, navigation }) {
     synopsis: overview,
     username: auth.currentUser.displayName,
     photoURL: auth.currentUser.photoURL,
-    rating: 0,
+    rating: star,
     comments: [],
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     uid,
@@ -50,8 +52,7 @@ export default function AddPostModal({ route, navigation }) {
       watched: firebase.firestore.FieldValue.arrayUnion(movieDetails),
     });
 
-    await postRef.add(newPost)
-    .then(async () => {
+    await postRef.add(newPost).then(async () => {
       navigation.goBack();
     });
     onChangeText("");
@@ -93,7 +94,26 @@ export default function AddPostModal({ route, navigation }) {
               <View key={movieid} style={styles.movieWrapper}>
                 <Text style={styles.overviewText}>Overview:{overview}</Text>
               </View>
-
+              <Stars
+                half={true}
+                default={rating/2}
+                update={(val) => {
+                  setStar(val);
+                }}
+                spacing={5}
+                starSize={100}
+                count={5}
+                fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
+                emptyStar={
+                  <Icon
+                    name={"star-outline"}
+                    style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+                  />
+                }
+                halfStar={
+                  <Icon name={"star-half"} style={[styles.myStarStyle]} />
+                }
+              />
               <View style={styles.sectionWrapper}>
                 <View style={styles.commentWrapper}>
                   <View>
@@ -251,5 +271,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     display: "flex",
     width: "100%",
+  },
+  myStarStyle: {
+    color: "yellow",
+    backgroundColor: "transparent",
+    textShadowColor: "black",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  myEmptyStarStyle: {
+    color: "white",
   },
 });
