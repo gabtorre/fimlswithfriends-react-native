@@ -17,6 +17,8 @@ import moment from "moment";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import  {WatchButton, LikeButton} from "../components/Post/LikeButton"
 import { db } from '../firebase';
+import {windowHeight, windowWidth} from '../utils/Dimensions';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PostModal({ route, navigation }) {
   const {
@@ -36,61 +38,46 @@ export default function PostModal({ route, navigation }) {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
-      <TouchableOpacity
-        style={styles.close}
-        onPress={() => navigation.goBack()}
-      >
+      <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()}>
         <Ionicons name="close" size={32} color="white" />
       </TouchableOpacity>
-      <ScrollView style={styles.posts}>
-        <View style={styles.container}>
-          <ImageBackground
-            style={styles.postPoster}
-            resizeMode={"cover"}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500/${poster}`,
-            }}
-          ></ImageBackground>
+      <ScrollView bounces={false}>
+        <ImageBackground
+          style={styles.postPoster}
+          resizeMode={"cover"}
+          source={{ uri: `https://image.tmdb.org/t/p/w500/${poster}`, }}
+        >
           <View style={styles.btnsRow}>
-          <WatchButton
-            style={styles.add}
-            title={title}
-            poster={poster}
-            movieid={movieid}
-            date={date}
-            navigation={navigation}
-          />
-          <LikeButton postid={postid} />
+            <WatchButton
+              style={styles.add}
+              title={title}
+              poster={poster}
+              movieid={movieid}
+              date={date}
+              navigation={navigation}
+            />
+            <LikeButton postid={postid} />
           </View>
+          <LinearGradient
+          colors={['transparent','rgba(24,29,47,1)']}
+          style={styles.gradientPosition}
+          />
+        </ImageBackground>
+        <View style={styles.container}>
+          <Text style={styles.movieTitle}>{title}</Text>
           <View key={postid} style={styles.postBigWrapper}>
-            <View style={styles.sectionWrapper}>
-              <View key={postid} style={styles.postWrapper}>
-                <View style={styles.row}>
-                  <View style={styles.postLeft}>
-                    <View style={styles.postWrapper}>
-                      <View style={styles.row}>
-                        <Image
-                          style={styles.profilepic}
-                          source={{
-                            uri: `${photoURL}`,
-                          }}
-                        />
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.postRight}>
-                    <Text style={styles.postTitle}>{text}</Text>
-                    <View style={styles.minicolumn}>
-                      <Text style={styles.postText}>
-                        {username} rated {rating} stars
-                      </Text>
-                      <Text style={styles.postText}>
-                        submitted {moment(createdAt.toDate()).fromNow()}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
+            <View style={styles.postRow}>
+              <Image
+                style={styles.profilepic}
+                source={{
+                  uri: `${photoURL}`,
+                }}
+              />
+              <View style={styles.postRight}>
+                <Text style={styles.postText}>{username} rated {rating} stars</Text>
+                <Text style={styles.postText}>submitted {moment(createdAt.toDate()).fromNow()}</Text>
               </View>
+              <Text style={styles.postTitle}>{text}</Text>
             </View>
             {comments ? <Comments comments={comments.comments} /> : null}
             <AddComment postid={postid} />
@@ -107,75 +94,64 @@ const styles = StyleSheet.create({
     width: "100%",
     height: '100%',
     backgroundColor: "#181D2F",
-    alignItems: "center",
+    paddingHorizontal: 20,
   },
-  sectionWrapper: {
+  btnsRow: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    height: windowHeight / 1.5,
+    paddingHorizontal: 20,
+    zIndex: 999,
+  },
+  gradientPosition: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: windowHeight / 1.5,
+    zIndex: 0,
+  },
+  movieTitle: {
+    color: '#ffffff',
+    fontSize: 35,
+    fontWeight: '700',
+    textAlign: 'left',
+  },
+  postBigWrapper: {
+    padding: 10,
     width: "100%",
-    alignItems: "center",
+    backgroundColor: "#0E111D",
+    marginVertical: 10,
+    borderRadius: 20,
   },
-  row: {
+  postRow: {
+    padding: 10,
     flexDirection: "row",
     flexWrap: "wrap",
     width: "100%",
   },
-  column: {
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  minicolumn: {
-    flexDirection: "column",
-    marginLeft: 5,
-  },
-  postLeft: {
-    width: "30%",
-    padding: 10,
-  },
   postRight: {
     width: "70%",
-    padding: 10,
+    padding: 8,
   },
-  header: {
+  postText: {
     color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  posts: {
-    width: "100%",
-    flexDirection: "column",
+    fontSize: 10,
+    margin: 2,
+    marginLeft: 10,
   },
   profilepic: {
     width: 50,
     height: 50,
     borderRadius: 50,
   },
-  postWrapper: {
-    padding: 10,
-    alignItems: "center",
-    width: "99%",
-    overflow: "hidden",
-    borderRadius: 10,
-    margin: 5,
-  },
-  postBigWrapper: {
-    padding: 10,
-    alignItems: "center",
-    width: "100%",
-    backgroundColor: "#0E111D",
-    marginBottom: 20,
-  },
   postTitle: {
+    display: 'flex',
     fontSize: 20,
-    margin: 5,
+    marginTop: 20,
     color: "white",
-  },
-  postText: {
-    color: "white",
-    fontSize: 10,
-    margin: 2,
-  },
-  posterWrapper: {
-    alignItems: "center",
-    width: "100%",
   },
   postPoster: {
     minHeight: 500,
@@ -190,12 +166,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2 },
     shadowColor: "black",
     shadowOpacity: 0.5,
-  },
-  btnsRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
