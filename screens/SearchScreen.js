@@ -102,11 +102,19 @@ class SearchScreen extends React.Component {
           />
         </SafeAreaView>
         <ScrollView style={styles.posts}>
-          <View style={styles.row}>
+        <View style={styles.row}>
             {this.state.userSuggestions &&
               this.state.userSuggestions.map((friend) => (
                 <View style={styles.userCard} key={friend.uid}>
-                  <TouchableOpacity style={styles.userCardWrapper}>
+                  <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("FriendLibraryModal", {
+                      uid: friend.uid,
+                      displayName: friend.displayName
+                    })
+                  }
+                  key={friend.uid}
+                  style={styles.userCardWrapper}>
                     <Text style={styles.userCardText}>
                       {friend.displayName}
                     </Text>
@@ -128,6 +136,8 @@ class SearchScreen extends React.Component {
                   )}
                 </View>
               ))}
+              </View>
+              <View style={styles.row}>
             {this.state.suggestions &&
               this.state.suggestions.map((post) => (
                 <TouchableOpacity
