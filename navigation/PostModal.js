@@ -15,7 +15,8 @@ import AddComment from "../components/Post/AddComment";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import moment from "moment";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
-import  {WatchButton, LikeButton} from "../components/Post/LikeButton"
+import  {LikeButton} from "../components/Post/LikeButton";
+import WatchButton from '../components/Library/WatchButton';
 import { db } from '../firebase';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -38,6 +39,7 @@ export default function PostModal({ route, navigation }) {
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }}>
+    <StatusBar hidden />
       <TouchableOpacity style={styles.close} onPress={() => navigation.goBack()}>
         <Ionicons name="close" size={32} color="white" />
       </TouchableOpacity>
@@ -49,7 +51,6 @@ export default function PostModal({ route, navigation }) {
         >
           <View style={styles.btnsRow}>
             <WatchButton
-              style={styles.add}
               title={title}
               poster={poster}
               movieid={movieid}
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     flexDirection: 'row',
-    height: windowHeight / 1.5,
+    height: 500,
     paddingHorizontal: 20,
     zIndex: 999,
   },
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    height: windowHeight / 1.5,
+    height: 500,
     zIndex: 0,
   },
   movieTitle: {
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   postPoster: {
-    minHeight: 500,
+    height: 500,
     minWidth: "100%",
     resizeMode: "cover",
   },

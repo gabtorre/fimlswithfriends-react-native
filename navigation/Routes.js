@@ -28,7 +28,7 @@ const Routes = () => {
   dark: false,
   colors: {
     primary: 'rgb(220, 53, 69)',
-    background: 'rgb(0, 0, 0)',
+    background: '#181e2f',
     card: 'rgb(0, 0, 0)',
     text: 'rgb(28, 28, 30)',
     border: '#181e2f',
