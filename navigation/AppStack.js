@@ -35,7 +35,7 @@ const AppStack = () => {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#dc3546',
           inactiveTintColor: 'gray',
         }}
       >
@@ -64,4 +64,3 @@ const AppStack = () => {
 };
 
 export default AppStack;
-

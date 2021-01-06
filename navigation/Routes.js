@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Firebase from '../firebase';
 import {AuthContext} from './AuthProvider';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
@@ -23,8 +24,20 @@ const Routes = () => {
 
   if (initializing) return null;
 
+  const MyTheme = {
+  dark: false,
+  colors: {
+    primary: 'rgb(220, 53, 69)',
+    background: 'rgb(0, 0, 0)',
+    card: 'rgb(0, 0, 0)',
+    text: 'rgb(28, 28, 30)',
+    border: '#181e2f',
+    notification: 'rgb(255, 69, 58)',
+  },
+};
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
