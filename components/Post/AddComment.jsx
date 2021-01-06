@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, TextInput, Button } from "react-native";
+import { StyleSheet, View, TextInput, TouchableOpacity, Text } from "react-native";
 import firebase from "firebase/app";
 import { db } from "../../firebase";
 import {AuthContext} from "../../navigation/AuthProvider"
@@ -34,44 +34,47 @@ export default function AddComment({ postid }) {
   };
 
   return (
-    <View style={styles.sectionWrapper}>
-      <View style={styles.commentWrapper}>
-        <View style={styles.row}>
-          <TextInput
-            style={{ height: 40, flex: 0.9, color: "white" }}
-            placeholder="Enter Comment Here"
-            placeholderTextColor="grey"
-            onChangeText={(text) => setComment(text)}
-          />
-          <Button
-            style={{ flex: 0.1 }}
-            title="submit"
-            onPress={() => handleCommentSubmission()}
-            type="submit"
-          />
-        </View>
+    <View style={styles.commentWrapper}>
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder="Add a comment..."
+          placeholderTextColor="grey"
+          onChangeText={(text) => setComment(text)}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          title="submit"
+          onPress={() => handleCommentSubmission()}
+          type="submit"
+        ><Text style={styles.buttonText}>Submit</Text></TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionWrapper: {
-    width: "100%",
-    alignItems: "center",
-  },
   commentWrapper: {
     padding: 10,
-    alignItems: "center",
-    width: "99%",
+    width: "100%",
     overflow: "hidden",
     backgroundColor: "#171C2E",
     borderRadius: 10,
-    margin: 5,
+    marginVertical: 5,
   },
   row: {
-    flexDirection: "row",
     display: "flex",
-    width: "100%",
+    flexDirection: "row",
+    alignItems: 'baseline'
   },
+  input: {
+    flexGrow: 1,
+  },
+  button: {
+    alignItems: "center",
+    padding: 10,
+  },
+  buttonText: {
+    color: '#dc3546',
+  }
 });
