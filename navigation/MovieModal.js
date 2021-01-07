@@ -80,8 +80,11 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    right: 5,
-    top: 5,
+    right: "5%",
+    top: "5%",
     zIndex: 999,
+    shadowOffset: { width: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.5,
   }
 });
