@@ -14,6 +14,7 @@ import { TMDBAPI } from "@env";
 import { user } from "../navigation/AuthProvider";
 import firebase from "firebase/app";
 import "firebase/auth";
+import AddPostModal from '../navigation/AddPostModal';
 
 const auth = firebase.auth();
 

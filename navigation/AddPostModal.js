@@ -16,11 +16,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { WatchButton } from "../components/Post/LikeButton";
 import Stars from "react-native-stars";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function AddPostModal({ route, navigation }) {
   const [text, onChangeText] = useState("");
   const { title, poster, movieid, year, date, overview, rating } = route.params;
-  const [star, setStar] = useState(rating/2);
+  const [star, setStar] = useState(rating / 2);
 
   const auth = Firebase.auth();
   const uid = auth.currentUser.uid;
@@ -66,15 +67,14 @@ export default function AddPostModal({ route, navigation }) {
       >
         <Ionicons name="close" size={32} color="white" />
       </TouchableOpacity>
-      <ScrollView style={styles.posts}>
-        <View style={styles.container}>
-          <ImageBackground
-            style={styles.postPoster}
-            resizeMode={"cover"}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500/${poster}`,
-            }}
-          ></ImageBackground>
+      <ScrollView bounces={false}>
+        <ImageBackground
+          style={styles.postPoster}
+          resizeMode={"cover"}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${poster}`,
+          }}
+        >
           <View style={styles.btnsRow}>
             <WatchButton
               style={styles.add}
@@ -82,58 +82,63 @@ export default function AddPostModal({ route, navigation }) {
               poster={poster}
               movieid={movieid}
               date={date}
+              navigation={navigation}
             />
           </View>
+          <LinearGradient
+            colors={["transparent", "rgba(24,29,47,1)"]}
+            style={styles.gradientPosition}
+          />
+        </ImageBackground>
 
-          <View key={movieid} style={styles.postBigWrapper}>
+        <View key={movieid} style={styles.postBigWrapper}>
+          <View style={styles.sectionWrapper}>
+            <Text style={styles.header}>
+              {title} ({year})
+            </Text>
+            <Text style={styles.title}>Release Date: {date}</Text>
+            <View key={movieid} style={styles.movieWrapper}>
+              <Text style={styles.overviewText}>Overview: {overview}</Text>
+            </View>
+            <Stars
+              half={true}
+              default={rating / 2}
+              update={(val) => {
+                setStar(val);
+              }}
+              spacing={5}
+              starSize={100}
+              count={5}
+              fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
+              emptyStar={
+                <Icon
+                  name={"star-outline"}
+                  style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+                />
+              }
+              halfStar={
+                <Icon name={"star-half"} style={[styles.myStarStyle]} />
+              }
+            />
             <View style={styles.sectionWrapper}>
-              <Text style={styles.header}>
-                {title} ({year})
-              </Text>
-              <Text style={styles.title}>Release Date: {date}</Text>
-              <View key={movieid} style={styles.movieWrapper}>
-                <Text style={styles.overviewText}>Overview:{overview}</Text>
-              </View>
-              <Stars
-                half={true}
-                default={rating/2}
-                update={(val) => {
-                  setStar(val);
-                }}
-                spacing={5}
-                starSize={100}
-                count={5}
-                fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
-                emptyStar={
-                  <Icon
-                    name={"star-outline"}
-                    style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+              <View style={styles.commentWrapper}>
+                <View>
+                  <TextInput
+                    style={{ height: 100, color: "white" }}
+                    placeholder="What do you think?"
+                    placeholderTextColor="grey"
+                    editable
+                    maxLength={40}
+                    multiline
+                    numberOfLines={4}
+                    onChangeText={(text) => onChangeText(text)}
+                    value={text}
                   />
-                }
-                halfStar={
-                  <Icon name={"star-half"} style={[styles.myStarStyle]} />
-                }
-              />
-              <View style={styles.sectionWrapper}>
-                <View style={styles.commentWrapper}>
-                  <View>
-                    <TextInput
-                      style={{ height: 100, color: "white" }}
-                      placeholder="What do you think?"
-                      placeholderTextColor="grey"
-                      editable
-                      maxLength={40}
-                      multiline
-                      numberOfLines={4}
-                      onChangeText={(text) => onChangeText(text)}
-                      value={text}
-                    />
-                    <Button
-                      title="share"
-                      onPress={() => addPost()}
-                      type="submit"
-                    />
-                  </View>
+                  <Button
+                    title="share"
+                    onPress={() => addPost()}
+                    type="submit"
+                  />
                 </View>
               </View>
             </View>
@@ -179,8 +184,9 @@ const styles = StyleSheet.create({
   },
   header: {
     color: "#F5F5F1",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 30,
+    fontWeight: "700",
+    marginTop: 20,
   },
   posts: {
     width: "100%",
@@ -201,6 +207,7 @@ const styles = StyleSheet.create({
   },
   movieWrapper: {
     padding: 20,
+    paddingTop: 0,
     alignItems: "center",
     width: "100%",
   },
@@ -248,11 +255,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   btnsRow: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
     flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    height: 500,
+    paddingHorizontal: 20,
+    zIndex: 999,
   },
   sectionWrapper: {
     width: "100%",
