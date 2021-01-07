@@ -107,7 +107,7 @@ export default function AddPostModal({ route, navigation }) {
                 setStar(val);
               }}
               spacing={5}
-              starSize={100}
+              starSize={50}
               count={5}
               fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
               emptyStar={
@@ -287,8 +287,10 @@ const styles = StyleSheet.create({
     textShadowColor: "black",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
+    fontSize: 20,
   },
   myEmptyStarStyle: {
     color: "white",
+    fontSize: 20,
   },
 });
