@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   title: {
-    color: '#ffffff',
+    color: '#F5F5F1',
     fontSize: 30,
     fontWeight: '700',
     marginTop: 20,
@@ -80,8 +80,11 @@ const styles = StyleSheet.create({
   },
   close: {
     position: 'absolute',
-    right: 5,
-    top: 5,
+    right: "5%",
+    top: "5%",
     zIndex: 999,
+    shadowOffset: { width: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.5,
   }
 });

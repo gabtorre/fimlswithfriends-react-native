@@ -25,3 +25,31 @@ export const LikeButton = ({ postid }) => {
     </TouchableOpacity>
   );
 };
+
+export const WatchButton = ({ movieid, title, date, poster, navigation }) => {
+  const { user, setUser } = useContext(AuthContext);
+  const uid = user.uid;
+  const movieRef = db.collection("users").doc(uid);
+  const movieDetails = { movieid, title, date, poster };
+
+  const addWatchList = () => {
+    movieRef
+      .update({
+        watchlist: firebase.firestore.FieldValue.arrayUnion(movieDetails),
+      })
+      .then(async () => {
+        navigation.goBack();
+      });
+  };
+
+  return (
+    <TouchableOpacity
+      width="auto"
+      alt="Add to Watch List"
+      onPress={addWatchList}
+      className="mr-2"
+    >
+      <Ionicons name="add" size={32} color="#F5F5F1" />
+    </TouchableOpacity>
+  );
+};
