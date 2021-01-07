@@ -14,6 +14,7 @@ import { TMDBAPI } from "@env";
 import { user } from "../navigation/AuthProvider";
 import firebase from "firebase/app";
 import "firebase/auth";
+import AddPostModal from '../navigation/AddPostModal';
 
 const auth = firebase.auth();
 
@@ -148,7 +149,6 @@ class SearchScreen extends React.Component {
                       title: post.title,
                       poster: post.poster_path,
                       date: post.release_date,
-                      year: post.release_date.substring(0, 4),
                       movieid: post.id,
                       overview: post.overview,
                       rating: post.vote_average,

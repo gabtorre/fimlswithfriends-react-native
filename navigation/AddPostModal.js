@@ -16,11 +16,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { WatchButton } from "../components/Post/LikeButton";
 import Stars from "react-native-stars";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function AddPostModal({ route, navigation }) {
   const [text, onChangeText] = useState("");
-  const { title, poster, movieid, year, date, overview, rating } = route.params;
-  const [star, setStar] = useState(rating/2);
+  const { title, poster, movieid, date, overview, rating } = route.params;
+  const [star, setStar] = useState(rating / 2);
 
   const auth = Firebase.auth();
   const uid = auth.currentUser.uid;
@@ -66,15 +67,14 @@ export default function AddPostModal({ route, navigation }) {
       >
         <Ionicons name="close" size={32} color="white" />
       </TouchableOpacity>
-      <ScrollView style={styles.posts}>
-        <View style={styles.container}>
-          <ImageBackground
-            style={styles.postPoster}
-            resizeMode={"cover"}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500/${poster}`,
-            }}
-          ></ImageBackground>
+      <ScrollView bounces={false}>
+        <ImageBackground
+          style={styles.postPoster}
+          resizeMode={"cover"}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500/${poster}`,
+          }}
+        >
           <View style={styles.btnsRow}>
             <WatchButton
               style={styles.add}
@@ -82,58 +82,63 @@ export default function AddPostModal({ route, navigation }) {
               poster={poster}
               movieid={movieid}
               date={date}
+              navigation={navigation}
             />
           </View>
+          <LinearGradient
+            colors={["transparent", "rgba(24,29,47,1)"]}
+            style={styles.gradientPosition}
+          />
+        </ImageBackground>
 
-          <View key={movieid} style={styles.postBigWrapper}>
+        <View key={movieid} style={styles.postBigWrapper}>
+          <View style={styles.sectionWrapper}>
+            <Text style={styles.header}>
+              {title} { date ? <Text>({date.substring(0, 4)})</Text> : null }
+            </Text>
+            {date ? <Text style={styles.rdate}>Release Date: {date}</Text> : null }
+            <View key={movieid} style={styles.movieWrapper}>
+              <Text style={styles.overviewText}>Overview: {overview}</Text>
+            </View>
+            <Stars
+              half={true}
+              default={rating / 2}
+              update={(val) => {
+                setStar(val);
+              }}
+              spacing={5}
+              starSize={50}
+              count={5}
+              fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
+              emptyStar={
+                <Icon
+                  name={"star-outline"}
+                  style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+                />
+              }
+              halfStar={
+                <Icon name={"star-half"} style={[styles.myStarStyle]} />
+              }
+            />
             <View style={styles.sectionWrapper}>
-              <Text style={styles.header}>
-                {title} ({year})
-              </Text>
-              <Text style={styles.title}>Release Date: {date}</Text>
-              <View key={movieid} style={styles.movieWrapper}>
-                <Text style={styles.overviewText}>Overview:{overview}</Text>
-              </View>
-              <Stars
-                half={true}
-                default={rating/2}
-                update={(val) => {
-                  setStar(val);
-                }}
-                spacing={5}
-                starSize={100}
-                count={5}
-                fullStar={<Icon name={"star"} style={[styles.myStarStyle]} />}
-                emptyStar={
-                  <Icon
-                    name={"star-outline"}
-                    style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+              <View style={styles.commentWrapper}>
+                <View>
+                  <TextInput
+                    style={{ height: 100, color: "white" }}
+                    placeholder="What do you think?"
+                    placeholderTextColor="grey"
+                    editable
+                    maxLength={40}
+                    multiline
+                    numberOfLines={4}
+                    onChangeText={(text) => onChangeText(text)}
+                    value={text}
                   />
-                }
-                halfStar={
-                  <Icon name={"star-half"} style={[styles.myStarStyle]} />
-                }
-              />
-              <View style={styles.sectionWrapper}>
-                <View style={styles.commentWrapper}>
-                  <View>
-                    <TextInput
-                      style={{ height: 100, color: "white" }}
-                      placeholder="What do you think?"
-                      placeholderTextColor="grey"
-                      editable
-                      maxLength={40}
-                      multiline
-                      numberOfLines={4}
-                      onChangeText={(text) => onChangeText(text)}
-                      value={text}
-                    />
-                    <Button
-                      title="share"
-                      onPress={() => addPost()}
-                      type="submit"
-                    />
-                  </View>
+                  <Button
+                    title="share"
+                    onPress={() => addPost()}
+                    type="submit"
+                  />
                 </View>
               </View>
             </View>
@@ -177,10 +182,16 @@ const styles = StyleSheet.create({
     width: "70%",
     padding: 10,
   },
+  rdate:{
+    color: "#F5F5F1",
+    padding: 2,
+    fontSize: 12,
+  },
   header: {
     color: "#F5F5F1",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 30,
+    fontWeight: "700",
+    marginTop: 20,
   },
   posts: {
     width: "100%",
@@ -201,6 +212,7 @@ const styles = StyleSheet.create({
   },
   movieWrapper: {
     padding: 20,
+    paddingTop: 0,
     alignItems: "center",
     width: "100%",
   },
@@ -208,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#0E111D",
+    backgroundColor: "#181D2F",
     marginBottom: 20,
   },
   postTitle: {
@@ -248,11 +260,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   btnsRow: {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
     flexDirection: "row",
-    flexWrap: "wrap",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    height: 500,
+    paddingHorizontal: 20,
+    zIndex: 999,
   },
   sectionWrapper: {
     width: "100%",
@@ -263,7 +277,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "99%",
     overflow: "hidden",
-    backgroundColor: "#171C2E",
+    backgroundColor: "#0E111D",
     borderRadius: 10,
     margin: 5,
   },
@@ -278,8 +292,18 @@ const styles = StyleSheet.create({
     textShadowColor: "black",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
+    fontSize: 20,
   },
   myEmptyStarStyle: {
     color: "white",
+    fontSize: 20,
+  },
+  gradientPosition: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 500,
+    zIndex: 0,
   },
 });
