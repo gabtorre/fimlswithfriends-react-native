@@ -149,7 +149,6 @@ class SearchScreen extends React.Component {
                       title: post.title,
                       poster: post.poster_path,
                       date: post.release_date,
-                      year: post.release_date.substring(0, 4),
                       movieid: post.id,
                       overview: post.overview,
                       rating: post.vote_average,

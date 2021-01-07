@@ -20,7 +20,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function AddPostModal({ route, navigation }) {
   const [text, onChangeText] = useState("");
-  const { title, poster, movieid, year, date, overview, rating } = route.params;
+  const { title, poster, movieid, date, overview, rating } = route.params;
   const [star, setStar] = useState(rating / 2);
 
   const auth = Firebase.auth();
@@ -94,9 +94,9 @@ export default function AddPostModal({ route, navigation }) {
         <View key={movieid} style={styles.postBigWrapper}>
           <View style={styles.sectionWrapper}>
             <Text style={styles.header}>
-              {title} ({year})
+              {title} { date ? <Text>({date.substring(0, 4)})</Text> : null }
             </Text>
-            <Text style={styles.title}>Release Date: {date}</Text>
+            {date ? <Text style={styles.rdate}>Release Date: {date}</Text> : null }
             <View key={movieid} style={styles.movieWrapper}>
               <Text style={styles.overviewText}>Overview: {overview}</Text>
             </View>
@@ -182,6 +182,11 @@ const styles = StyleSheet.create({
     width: "70%",
     padding: 10,
   },
+  rdate:{
+    color: "#F5F5F1",
+    padding: 2,
+    fontSize: 12,
+  },
   header: {
     color: "#F5F5F1",
     fontSize: 30,
@@ -215,7 +220,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#0E111D",
+    backgroundColor: "#181D2F",
     marginBottom: 20,
   },
   postTitle: {
@@ -272,7 +277,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "99%",
     overflow: "hidden",
-    backgroundColor: "#171C2E",
+    backgroundColor: "#0E111D",
     borderRadius: 10,
     margin: 5,
   },
@@ -292,5 +297,13 @@ const styles = StyleSheet.create({
   myEmptyStarStyle: {
     color: "white",
     fontSize: 20,
+  },
+  gradientPosition: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 500,
+    zIndex: 0,
   },
 });
